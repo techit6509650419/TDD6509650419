@@ -1,11 +1,11 @@
 package core;
 
 public interface IStack {
+	int getSize() ;
 	boolean isEmpty();
-	int getSize();
-	void push(Object obj);
-	Object top();
 	boolean isFull();
-	Object pop();
+	void push(Object elm) throws Exception;
+	Object top();
+	Object pop() throws Exception;
 
 }

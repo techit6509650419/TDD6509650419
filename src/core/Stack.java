@@ -1,58 +1,65 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Stack implements IStack {
+    private List<Object> elements;
+    private int capacity;
+    private Class<?> type;
 
-	Object element ;
-	Object arr[];
-	int capacity = 3 ;
-	int top ;
-	
-	Stack(){
-		arr = new Object[capacity];
-		top = -1 ;
-	}
-	
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return true ;
-	}
+    public Stack(int capacity) {
+        this.elements = new ArrayList<>();
+        this.capacity = capacity;
+        this.type = null;
+    }
 
-	@Override
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	public void push(Object element) {
-		
-		if(!isFull()) {
-		top++;
-		arr[top] = element;
-		}
-		
-	}
-	
-	public Object top() {
-		
-		return arr[top];
-	}
-	
-	public boolean isFull() {
-		if(top<capacity-1) {
-			return false;
-		}
-		
-		else {
-			return true;
-		}
-	}
-	
-	public Object pop() {
-		Object x = arr[top];
-		arr[top]= null;
-		top--;
-		return x;
-	}
+    @Override
+    public int getSize() {
+        return elements.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return elements.isEmpty();
+    }
+
+    @Override
+    public void push(Object element) throws Exception {
+        if (getSize() == capacity) {
+            throw new Exception("Stack overflow");
+        }
+
+        if (element == null) {
+            throw new IllegalArgumentException("Null elements are not allowed in the stack.");
+        }
+
+        if (type == null) {
+            type = element.getClass();
+        } else if (!element.getClass().equals(type)) {
+            throw new Exception("All elements in the stack must be of the same type.");
+        }
+
+        elements.add(element);
+    }
+
+    @Override
+    public Object top() {
+        if (isEmpty()) {
+            return null;
+        }
+        return elements.get(getSize() - 1);
+    }
+
+    public Object pop() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Stack underflow");
+        }
+        return elements.remove(getSize() - 1);
+    }
+
+    @Override
+    public boolean isFull() {
+        return getSize() == capacity;
+    }
 }
-

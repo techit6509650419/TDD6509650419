@@ -1,45 +1,56 @@
 package core;
 
-
 import junit.framework.TestCase;
 
 public class StackTestCases extends TestCase {
+	
+	   //TC1
+	   public void testCreateEmptyStack() {
+	        Stack stack = new Stack(10);
+	        assertTrue(stack.isEmpty());
+	    }
 
-	//TC1
-	public void testCreateNewEmptyStack() {
-		Stack s1 = new Stack();
-		int size = s1.getSize();
-		
-		assertEquals(0, size);
-		assertTrue(s1.isEmpty());
-    }
-	
-	//TC2
-	public void testPushElmToTop() {
-		Stack s1 = new Stack();
-		assertFalse(s1.isFull());
-		int obj1 = new Integer(1);
-		s1.push(obj1);
-		assertEquals(s1.top(), obj1);
-	}
-	
-	//TC3
-	public void testLastInFirstOut() {
-		Stack s1 = new Stack();
-		Integer obj1 = new Integer(1);
-		Integer obj2 = new Integer(2);
-		try {
-			
-			s1.push(obj1);
-			s1.push(obj2);
-		
-			 } catch (Exception e) {
-			e.printStackTrace();
-			 }
+	    // TC2
+	    public void testPushAndTop() throws Exception {
+	        Stack stack = new Stack(10);
+	        stack.push(5);
+	        assertEquals(5, stack.top());
+	    }
 
-	
-			 assertEquals(s1.pop(), obj2);
-			 assertEquals(s1.pop(), obj1);
-			 
-	}
+	    // TC3
+	    public void testPushSameType() {
+	        Stack stack = new Stack(10);
+	        try {
+	            stack.push(5);
+	            stack.push("Test");
+	            fail("Exception was not thrown");
+	        } catch (Exception e) {
+	            assertEquals("All elements in the stack must be of the same type.", e.getMessage());
+	        }
+	    }
+
+	    // TC4
+	    public void testLIFOProperty() throws Exception {
+	        Stack stack = new Stack(10);
+	        stack.push(1);
+	        stack.push(2);
+	        assertEquals(2, stack.pop());
+	        assertEquals(1, stack.pop());
+	    }
+
+	    // TC5
+	    public void testStackOverflow() {
+	        Stack stack = new Stack(5);
+	        try {
+	            stack.push(1);
+	            stack.push(2);
+	            stack.push(3);
+	            stack.push(4);
+	            stack.push(5);
+	            stack.push(6);
+	            fail("Exception was not thrown");
+	        } catch (Exception e) {
+	            assertEquals("Stack overflow", e.getMessage());
+	        }
+	    }
 }
